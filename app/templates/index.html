@@ -1,0 +1,282 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-gradient text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-black/20"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="animate-slide-up">
+                <h1 class="text-5xl lg:text-6xl font-bold leading-tight mb-6">
+                    Premium Shopping
+                    <span class="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">
+                        Experience
+                    </span>
+                </h1>
+                <p class="text-xl text-blue-100 mb-8 leading-relaxed">
+                    Discover curated collections of premium products with exceptional quality, 
+                    competitive prices, and fast delivery. Your perfect shopping destination awaits.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="{{ url_for('main.products') }}" 
+                       class="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg text-center">
+                        Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                    <a href="#featured" 
+                       class="border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-primary-600 transition-all duration-300 text-center">
+                        Explore Features
+                    </a>
+                </div>
+            </div>
+            <div class="relative animate-bounce-gentle">
+                <div class="relative z-10">
+                    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" 
+                         alt="Hero Image" 
+                         class="rounded-2xl shadow-2xl">
+                </div>
+                <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-400 rounded-2xl rotate-12"></div>
+                <div class="absolute -top-6 -left-6 w-24 h-24 bg-secondary-400 rounded-2xl -rotate-12"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Wave Divider -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden">
+        <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="relative block w-full h-16">
+            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V0Z" 
+                  class="fill-white"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-20 bg-white" id="featured">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                Why Choose <span class="text-primary-600">NexaStore</span>?
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                We're committed to providing you with the best shopping experience possible
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-primary-50 to-secondary-50 hover:shadow-xl transition-all duration-300">
+                <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shipping-fast text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Fast Delivery</h3>
+                <p class="text-gray-600">Free shipping on orders over $50. Get your products delivered within 2-3 business days.</p>
+            </div>
+            
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-secondary-50 to-primary-50 hover:shadow-xl transition-all duration-300">
+                <div class="w-16 h-16 bg-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shield-alt text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">Secure Payment</h3>
+                <p class="text-gray-600">Your payments are safe with our encrypted payment processing system.</p>
+            </div>
+            
+            <div class="text-center p-8 rounded-2xl bg-gradient-to-br from-primary-50 to-secondary-50 hover:shadow-xl transition-all duration-300">
+                <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-headset text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-4">24/7 Support</h3>
+                <p class="text-gray-600">Our customer support team is available around the clock to help you.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                Featured <span class="text-primary-600">Products</span>
+            </h2>
+            <p class="text-xl text-gray-600">Handpicked selection of premium products</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for product in featured_products %}
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group">
+                <div class="relative overflow-hidden">
+                    <img src="{{ product.images[0] }}" 
+                         alt="{{ product.name }}" 
+                         class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute top-4 right-4">
+                        <span class="bg-primary-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            Featured
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm text-gray-500">{{ product.brand }}</span>
+                        <div class="flex items-center">
+                            <i class="fas fa-star text-yellow-400 text-sm"></i>
+                            <span class="text-sm text-gray-600 ml-1">{{ product.rating }}</span>
+                        </div>
+                    </div>
+                    
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ product.name }}</h3>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ product.description }}</p>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl font-bold text-primary-600">${{ "%.2f"|format(product.price) }}</span>
+                            {% if product.compare_price %}
+                            <span class="text-lg text-gray-500 line-through">${{ "%.2f"|format(product.compare_price) }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <button onclick="addToCart({{ product.id }})" 
+                                class="bg-primary-500 text-white p-3 rounded-xl hover:bg-primary-600 transition-colors duration-200 group-hover:scale-110">
+                            <i class="fas fa-shopping-bag"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-12">
+            <a href="{{ url_for('main.products') }}" 
+               class="inline-flex items-center px-8 py-4 bg-primary-500 text-white rounded-xl font-semibold hover:bg-primary-600 transition-all duration-300 transform hover:scale-105">
+                View All Products
+                <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Categories Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                Shop by <span class="text-primary-600">Category</span>
+            </h2>
+            <p class="text-xl text-gray-600">Explore our wide range of product categories</p>
+        </div>
+        
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {% for category in categories %}
+            <a href="{{ url_for('main.products') }}?category={{ category.id }}" 
+               class="group text-center p-6 bg-gray-50 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <span class="text-2xl">{{ category.icon }}</span>
+                </div>
+                <h3 class="font-semibold text-gray-800 group-hover:text-primary-600 mb-1">{{ category.name }}</h3>
+                <p class="text-sm text-gray-500">{{ category.count }} products</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-20 bg-gradient-to-r from-primary-600 to-secondary-600 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-4xl font-bold mb-4">Stay Updated</h2>
+        <p class="text-xl text-blue-100 mb-8">Subscribe to our newsletter for the latest products and exclusive offers</p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+            <input type="email" 
+                   placeholder="Enter your email" 
+                   class="flex-1 px-6 py-4 rounded-xl text-gray-900 focus:outline-none focus:ring-4 focus:ring-white/20">
+            <button class="bg-white text-primary-600 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-colors duration-200">
+                Subscribe
+            </button>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Add to cart function with enhanced UI
+async function addToCart(productId) {
+    try {
+        const response = await fetch("{{ url_for('main.add_to_cart') }}", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `product_id=${productId}&quantity=1`
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            // Show success toast
+            showToast(data.message, 'success');
+            
+            // Update cart count with animation
+            const cartCounts = document.querySelectorAll('.fa-shopping-bag').forEach(icon => {
+                const badge = icon.parentElement.querySelector('span');
+                if (badge) {
+                    badge.textContent = data.cart_count;
+                    badge.classList.add('animate-pulse');
+                    setTimeout(() => badge.classList.remove('animate-pulse'), 1000);
+                }
+            });
+        }
+    } catch (error) {
+        showToast('Error adding product to cart', 'error');
+    }
+}
+
+// Enhanced toast notification
+function showToast(message, type = 'success') {
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    const toastIcon = document.getElementById('toastIcon');
+    
+    // Set message and style based on type
+    toastMessage.textContent = message;
+    
+    if (type === 'success') {
+        toastIcon.className = 'w-6 h-6 bg-green-500 rounded-full flex items-center justify-center';
+        toastIcon.innerHTML = '<i class="fas fa-check text-white text-xs"></i>';
+    } else {
+        toastIcon.className = 'w-6 h-6 bg-red-500 rounded-full flex items-center justify-center';
+        toastIcon.innerHTML = '<i class="fas fa-exclamation text-white text-xs"></i>';
+    }
+    
+    // Show toast
+    toast.classList.remove('translate-x-full');
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        toast.classList.add('translate-x-full');
+    }, 3000);
+}
+
+// Mobile menu functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('animate-slide-up');
+        });
+    }
+    
+    // Loading bar animation
+    const loadingBar = document.getElementById('loadingBar');
+    if (loadingBar) {
+        loadingBar.classList.add('loading-bar');
+        setTimeout(() => {
+            loadingBar.classList.remove('loading-bar');
+            loadingBar.style.transform = 'translateX(0%)';
+        }, 100);
+    }
+});
+</script>
+{% endblock %}
