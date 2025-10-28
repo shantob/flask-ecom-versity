@@ -1,0 +1,18 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">Order {{ order.order_number }}</h1>
+<div class="bg-white p-4 rounded">
+  <div class="mb-2"><strong>Customer:</strong> {{ order.customer_name }}</div>
+  <div class="mb-2"><strong>Email:</strong> {{ order.customer_email }}</div>
+  <div class="mb-2"><strong>Phone:</strong> {{ order.customer_phone }}</div>
+  <div class="mb-2"><strong>Address:</strong> {{ order.customer_address }}</div>
+  <div class="mb-2"><strong>Total:</strong> {{ order.total_amount }}</div>
+
+  <h2 class="mt-4 font-semibold">Items</h2>
+  <ul class="list-disc pl-6">
+    {% for it in order.order_items %}
+      <li>{{ it.product_name }} x {{ it.quantity }} — {{ it.total_price }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

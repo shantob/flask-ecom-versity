@@ -1,0 +1,41 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<div class="flex justify-between items-center mb-4">
+  <h1 class="text-2xl font-bold">Products</h1>
+  <a href="{{ url_for('admin.add_product') }}" class="bg-green-600 text-white px-4 py-2 rounded">Add Product</a>
+</div>
+
+<table class="w-full bg-white rounded shadow">
+  <thead class="bg-gray-50">
+    <tr>
+      <th class="p-3 text-left">#</th>
+      <th class="p-3 text-left">Image</th>
+      <th class="p-3 text-left">Name</th>
+      <th class="p-3 text-left">SKU</th>
+      <th class="p-3 text-left">Price</th>
+      <th class="p-3 text-left">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+    <tr class="border-t">
+      <td class="p-3">{{ p.id }}</td>
+      <td class="p-3">
+        <img src="{{ p.first_image }}" alt="" class="w-16 h-12 object-cover rounded">
+      </td>
+      <td class="p-3">{{ p.name }}</td>
+      <td class="p-3">{{ p.sku }}</td>
+      <td class="p-3">{{ p.price }}</td>
+      <td class="p-3">
+        <a class="text-blue-600 mr-3" href="{{ url_for('admin.edit_product', id=p.id) }}">Edit</a>
+        <form method="post" action="{{ url_for('admin.delete_product', id=p.id) }}" style="display:inline">
+          <button class="text-red-600" onclick="return confirm('Delete product?')">Delete</button>
+        </form>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="p-4 text-gray-500">No products found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

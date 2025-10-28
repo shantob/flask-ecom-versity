@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% block title %}{% if settings %}{{ settings.site_name }} - {{ settings.site_tags }}{% else %}Premium Shopping Experience{% endif %}{% endblock %}
+
 {% block content %}
 <!-- Hero Section -->
 <section class="hero-gradient text-white relative overflow-hidden">
@@ -14,8 +16,7 @@
                     </span>
                 </h1>
                 <p class="text-xl text-blue-100 mb-8 leading-relaxed">
-                    Discover curated collections of premium products with exceptional quality, 
-                    competitive prices, and fast delivery. Your perfect shopping destination awaits.
+                    {{ settings.site_description if settings else "Discover curated collections of premium products with exceptional quality, competitive prices, and fast delivery. Your perfect shopping destination awaits." }}
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4">
                     <a href="{{ url_for('main.products') }}" 
@@ -54,7 +55,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
             <h2 class="text-4xl font-bold text-gray-900 mb-4">
-                Why Choose <span class="text-primary-600">NexaStore</span>?
+                Why Choose <span class="text-primary-600">{{ settings.site_name if settings else "NexaStore" }}</span>?
             </h2>
             <p class="text-xl text-gray-600 max-w-2xl mx-auto">
                 We're committed to providing you with the best shopping experience possible
@@ -103,7 +104,7 @@
             {% for product in featured_products %}
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover group">
                 <div class="relative overflow-hidden">
-                    <img src="{{ product.images[0] }}" 
+                    <img src="{% if product.images %}{{ url_for('static', filename=product.images[0]) }}{% else %}https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80{% endif %}" 
                          alt="{{ product.name }}" 
                          class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute top-4 right-4">
@@ -115,15 +116,15 @@
                 
                 <div class="p-6">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-sm text-gray-500">{{ product.brand }}</span>
+                        <span class="text-sm text-gray-500">{{ product.brand.name }}</span>
                         <div class="flex items-center">
                             <i class="fas fa-star text-yellow-400 text-sm"></i>
-                            <span class="text-sm text-gray-600 ml-1">{{ product.rating }}</span>
+                            <span class="text-sm text-gray-600 ml-1">4.5</span>
                         </div>
                     </div>
                     
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ product.name }}</h3>
-                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ product.description }}</p>
+                    <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ product.short_description or product.description }}</p>
                     
                     <div class="flex items-center justify-between">
                         <div class="flex items-center space-x-2">
@@ -139,6 +140,12 @@
                         </button>
                     </div>
                 </div>
+            </div>
+            {% else %}
+            <div class="col-span-3 text-center py-12">
+                <i class="fas fa-box-open text-4xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600">No featured products available</h3>
+                <p class="text-gray-500">Check back later for featured products</p>
             </div>
             {% endfor %}
         </div>
@@ -168,11 +175,21 @@
             <a href="{{ url_for('main.products') }}?category={{ category.id }}" 
                class="group text-center p-6 bg-gray-50 rounded-2xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                 <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <span class="text-2xl">{{ category.icon }}</span>
+                    {% if category.image %}
+                    <img src="{{ url_for('static', filename=category.image) }}" alt="{{ category.name }}" class="w-8 h-8 object-cover">
+                    {% else %}
+                    <span class="text-2xl text-white">{{ category.icon }}</span>
+                    {% endif %}
                 </div>
                 <h3 class="font-semibold text-gray-800 group-hover:text-primary-600 mb-1">{{ category.name }}</h3>
-                <p class="text-sm text-gray-500">{{ category.count }} products</p>
+                <p class="text-sm text-gray-500">{{ category.products|length }} products</p>
             </a>
+            {% else %}
+            <div class="col-span-6 text-center py-12">
+                <i class="fas fa-folder-open text-4xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600">No categories available</h3>
+                <p class="text-gray-500">Categories will be added soon</p>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -216,13 +233,10 @@ async function addToCart(productId) {
             showToast(data.message, 'success');
             
             // Update cart count with animation
-            const cartCounts = document.querySelectorAll('.fa-shopping-bag').forEach(icon => {
-                const badge = icon.parentElement.querySelector('span');
-                if (badge) {
-                    badge.textContent = data.cart_count;
-                    badge.classList.add('animate-pulse');
-                    setTimeout(() => badge.classList.remove('animate-pulse'), 1000);
-                }
+            document.querySelectorAll('.cart-count').forEach(element => {
+                element.textContent = data.cart_count;
+                element.classList.add('animate-pulse');
+                setTimeout(() => element.classList.remove('animate-pulse'), 1000);
             });
         }
     } catch (error) {

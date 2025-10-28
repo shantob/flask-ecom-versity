@@ -1,0 +1,100 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-4">{{ 'Edit' if product else 'Add' }} Product</h1>
+
+<form method="post" enctype="multipart/form-data">
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <label class="block">Name</label>
+      <input name="name" value="{{ product.name if product else '' }}" required class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">Slug</label>
+      <input name="slug" value="{{ product.slug if product else '' }}" class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">SKU</label>
+      <input name="sku" value="{{ product.sku if product else '' }}" class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">Price</label>
+      <input name="price" type="number" step="0.01" value="{{ product.price if product else '' }}" class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">Compare Price</label>
+      <input name="compare_price" type="number" step="0.01" value="{{ product.compare_price if product else '' }}" class="w-full p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block">Category</label>
+      <select name="category_id" required class="w-full p-2 border rounded">
+        {% for c in categories %}
+          <option value="{{ c.id }}" {% if product and product.category_id==c.id %}selected{% endif %}>{{ c.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div>
+      <label class="block">Brand</label>
+      <select name="brand_id" required class="w-full p-2 border rounded">
+        {% for b in brands %}
+          <option value="{{ b.id }}" {% if product and product.brand_id==b.id %}selected{% endif %}>{{ b.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label>Quantity</label>
+      <input name="quantity" type="number" value="{{ product.quantity if product else 0 }}" class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">Features</label>
+      <input name="features" value="{{ product.features if product else '' }}" class="w-full p-2 border rounded" />
+    </div>
+
+    <div>
+      <label class="block">Rating</label>
+      <input name="rating" type="number" step="0.1" value="{{ product.rating if product else 0 }}" class="w-full p-2 border rounded" />
+    </div>
+    <div>
+      <label class="block">Review Count</label>
+      <input name="review_count" type="number" value="{{ product.review_count if product else 0 }}" class="w-full p-2 border rounded" />
+    </div>
+
+    <div class="col-span-2">
+      <label class="block">Short Description</label>
+      <textarea name="short_description" class="w-full p-2 border rounded">{{ product.short_description if product else '' }}</textarea>
+    </div>
+    <div class="col-span-2">
+      <label class="block">Description</label>
+      <textarea name="description" class="w-full p-2 border rounded">{{ product.description if product else '' }}</textarea>
+    </div>
+
+    <div>
+      <label class="inline-flex items-center">
+        <input name="featured" type="checkbox" {% if product and product.featured %}checked{% endif %} class="mr-2"> Featured
+      </label>
+    </div>
+    <div>
+      <label class="inline-flex items-center">
+        <input name="in_stock" type="checkbox" {% if product and product.in_stock %}checked{% endif %} class="mr-2"> In Stock
+      </label>
+    </div>
+
+    <div class="col-span-2">
+      <label>Images (you can upload multiple)</label>
+      <input type="file" name="images" multiple class="w-full" />
+      {% if product and product.get_images() %}
+        <div class="flex gap-2 mt-2 flex-wrap">
+          {% for im in product.get_images() %}
+            <img src="/static/{{ im }}" class="w-24 h-20 object-cover rounded" />
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button class="bg-blue-600 text-white px-4 py-2 rounded">{{ 'Update' if product else 'Add' }} Product</button>
+  </div>
+</form>
+{% endblock %}

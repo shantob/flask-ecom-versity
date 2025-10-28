@@ -1,0 +1,33 @@
+{% extends 'admin/admin_base.html' %}
+{% block content %}
+<h1 class="text-2xl font-bold mb-6">Dashboard</h1>
+<div class="grid grid-cols-3 gap-4 mb-6">
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-sm text-gray-500">Products</h3>
+    <p class="text-2xl font-semibold">{{ total_products }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-sm text-gray-500">Orders</h3>
+    <p class="text-2xl font-semibold">{{ total_orders }}</p>
+  </div>
+  <div class="bg-white p-4 rounded shadow">
+    <h3 class="text-sm text-gray-500">Categories</h3>
+    <p class="text-2xl font-semibold">{{ total_categories }}</p>
+  </div>
+</div>
+
+<h2 class="text-lg font-semibold mb-2">Recent Orders</h2>
+<div class="space-y-2">
+  {% for o in recent_orders %}
+    <div class="bg-white p-3 rounded flex justify-between items-center">
+      <div>
+        <div class="font-medium">{{ o.order_number }}</div>
+        <div class="text-sm text-gray-500">{{ o.customer_name }} · {{ o.total_amount }} USD</div>
+      </div>
+      <div class="text-sm text-gray-600">{{ o.created_at.strftime('%d-%m-%Y %H:%M') }}</div>
+    </div>
+  {% else %}
+    <div class="text-gray-500">No orders yet.</div>
+  {% endfor %}
+</div>
+{% endblock %}
