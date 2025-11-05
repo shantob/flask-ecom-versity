@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{% if settings %}{{ settings.site_name }}{% else %}NexaStore{% endif %}{% endblock %}</title>
+    <title>{% block title %}{% if settings %}{{ settings.site_name }}{% else %}EcomSolution{% endif %}{% endblock %}</title>
     
     <!-- Favicon -->
-    {% if settings and settings.favicon %}
-    <link rel="icon" href="{{ url_for('static', filename=settings.favicon) }}" type="image/x-icon">
-    {% else %}
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛒</text></svg>">
+    {% if settings and settings.logo %}
+    <link rel="icon" href="{{ url_for('static', filename=settings.logo) }}" type="image/x-icon">
     {% endif %}
     
     <!-- Tailwind CSS -->

@@ -1,18 +1,74 @@
 {% extends 'admin/admin_base.html' %}
+{% block title %}Order {{ order.order_number }}{% endblock %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Order {{ order.order_number }}</h1>
-<div class="bg-white p-4 rounded">
-  <div class="mb-2"><strong>Customer:</strong> {{ order.customer_name }}</div>
-  <div class="mb-2"><strong>Email:</strong> {{ order.customer_email }}</div>
-  <div class="mb-2"><strong>Phone:</strong> {{ order.customer_phone }}</div>
-  <div class="mb-2"><strong>Address:</strong> {{ order.customer_address }}</div>
-  <div class="mb-2"><strong>Total:</strong> {{ order.total_amount }}</div>
 
-  <h2 class="mt-4 font-semibold">Items</h2>
-  <ul class="list-disc pl-6">
-    {% for it in order.order_items %}
-      <li>{{ it.product_name }} x {{ it.quantity }} — {{ it.total_price }}</li>
-    {% endfor %}
-  </ul>
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Order #{{ order.order_number }}</h1>
+
+  <div class="flex space-x-2">
+    <!-- Download PDF -->
+    <a href="{{ url_for('admin.download_order_pdf', id=order.id) }}"
+       class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+      Download PDF
+    </a>
+
+    <!-- Change Status -->
+    <form method="POST" action="{{ url_for('admin.update_order_status', id=order.id) }}">
+      <select name="status"
+              class="border rounded px-3 py-2"
+              onchange="this.form.submit()">
+        {% for s in ['pending', 'processing', 'shipped', 'delivered', 'cancelled'] %}
+          <option value="{{ s }}" {% if order.status == s %}selected{% endif %}>{{ s|capitalize }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
 </div>
+
+<div class="bg-white p-6 rounded-xl shadow">
+  <div class="grid md:grid-cols-2 gap-4">
+    <div>
+      <p><strong>Customer:</strong> {{ order.customer_name }}</p>
+      <p><strong>Email:</strong> {{ order.customer_email }}</p>
+      <p><strong>Phone:</strong> {{ order.customer_phone }}</p>
+      <p><strong>Address:</strong> {{ order.customer_address }}</p>
+    </div>
+    <div>
+      <p><strong>Payment Method:</strong> {{ order.payment_method|capitalize }}</p>
+      <p><strong>Status:</strong> 
+        <span class="inline-block px-2 py-1 rounded text-white
+          {% if order.status == 'pending' %}bg-yellow-500
+          {% elif order.status == 'processing' %}bg-blue-500
+          {% elif order.status == 'shipped' %}bg-indigo-500
+          {% elif order.status == 'delivered' %}bg-green-600
+          {% elif order.status == 'cancelled' %}bg-red-600{% endif %}">
+          {{ order.status|capitalize }}
+        </span>
+      </p>
+      <p><strong>Total Amount:</strong> {{ order.total_amount }} ৳</p>
+      <p><strong>Order Date:</strong> {{ order.created_at.strftime('%d %b, %Y %I:%M %p') }}</p>
+    </div>
+  </div>
+
+  <h2 class="mt-6 mb-3 font-semibold text-lg border-b pb-1">Items</h2>
+  <table class="w-full border-collapse">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="p-2 border">Product</th>
+        <th class="p-2 border text-center">Quantity</th>
+        <th class="p-2 border text-right">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for it in order.order_items %}
+      <tr>
+        <td class="p-2 border">{{ it.product_name }}</td>
+        <td class="p-2 border text-center">{{ it.quantity }}</td>
+        <td class="p-2 border text-right">{{ it.total_price }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
 {% endblock %}

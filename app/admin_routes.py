@@ -6,6 +6,11 @@ from app import db
 from app.models import Admin, Category, Brand, Product, Order, OrderItem, WebsiteSettings
 from app.utils import admin_required, save_image, generate_order_number
 from slugify import slugify
+from flask import make_response
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from io import BytesIO
+
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin', template_folder='templates/admin')
 
@@ -275,6 +280,65 @@ def orders():
 def order_detail(id):
     order = Order.query.get_or_404(id)
     return render_template('admin/order_detail.html', order=order)
+
+@admin_bp.route('/orders/<int:id>/status', methods=['POST'])
+@admin_required
+def update_order_status(id):
+    order = Order.query.get_or_404(id)
+    new_status = request.form.get('status')
+    if new_status in ['pending', 'processing', 'shipped', 'delivered', 'cancelled']:
+        order.status = new_status
+        db.session.commit()
+        flash(f"Order status updated to {new_status.capitalize()}!", "success")
+    else:
+        flash("Invalid status!", "error")
+    return redirect(url_for('admin.order_detail', id=order.id))
+
+
+@admin_bp.route('/orders/<int:id>/download', methods=['GET'])
+@admin_required
+def download_order_pdf(id):
+    order = Order.query.get_or_404(id)
+
+    buffer = BytesIO()
+    pdf = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+
+    pdf.setFont("Helvetica-Bold", 16)
+    pdf.drawString(50, height - 50, f"Order Invoice #{order.order_number}")
+
+    pdf.setFont("Helvetica", 12)
+    pdf.drawString(50, height - 90, f"Customer: {order.customer_name}")
+    pdf.drawString(50, height - 110, f"Email: {order.customer_email}")
+    pdf.drawString(50, height - 130, f"Phone: {order.customer_phone}")
+    pdf.drawString(50, height - 150, f"Address: {order.customer_address}")
+    pdf.drawString(50, height - 170, f"Payment Method: {order.payment_method}")
+    pdf.drawString(50, height - 190, f"Status: {order.status}")
+    pdf.drawString(50, height - 210, f"Total Amount: {order.total_amount} BDT")
+
+    # Table header
+    y = height - 250
+    pdf.setFont("Helvetica-Bold", 12)
+    pdf.drawString(50, y, "Product")
+    pdf.drawString(300, y, "Qty")
+    pdf.drawString(400, y, "Total")
+
+    pdf.setFont("Helvetica", 12)
+    y -= 20
+    for item in order.order_items:
+        pdf.drawString(50, y, item.product_name)
+        pdf.drawString(300, y, str(item.quantity))
+        pdf.drawString(400, y, str(item.total_price))
+        y -= 20
+
+    pdf.showPage()
+    pdf.save()
+
+    buffer.seek(0)
+    response = make_response(buffer.getvalue())
+    response.headers['Content-Type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = f'attachment; filename=order_{order.order_number}.pdf'
+    return response
 
 # ---- SETTINGS ----
 @admin_bp.route('/settings', methods=['GET', 'POST'])
