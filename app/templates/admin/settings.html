@@ -1,28 +1,60 @@
 {% extends 'admin/admin_base.html' %}
 {% block content %}
-<h1 class="text-2xl font-bold mb-4">Settings</h1>
+<h1 class="text-2xl font-bold mb-4">Website Settings</h1>
 
 <form method="post" enctype="multipart/form-data">
+
+  <!-- Site Name -->
   <label class="block">Site Name</label>
-  <input name="site_name" value="{{ settings.site_name or '' }}" class="w-full p-2 border rounded mb-2" />
+  <input name="site_name" value="{{ settings.site_name or '' }}" class="w-full p-2 border rounded mb-3" />
 
+  <!-- Site Description -->
+  <label class="block">Site Description</label>
+  <textarea name="site_description" class="w-full p-2 border rounded mb-3">{{ settings.site_description or '' }}</textarea>
+
+  <!-- Site Tags -->
+  <label class="block">Site Tags (comma separated)</label>
+  <textarea name="site_tags" class="w-full p-2 border rounded mb-3">{{ settings.site_tags or '' }}</textarea>
+
+  <!-- Contact Email -->
   <label class="block">Contact Email</label>
-  <input name="contact_email" value="{{ settings.contact_email or '' }}" class="w-full p-2 border rounded mb-2" />
+  <input name="contact_email" value="{{ settings.contact_email or '' }}" class="w-full p-2 border rounded mb-3" />
 
+  <!-- Contact Phone -->
+  <label class="block">Contact Phone</label>
+  <input name="contact_phone" value="{{ settings.contact_phone or '' }}" class="w-full p-2 border rounded mb-3" />
+
+  <!-- Address -->
+  <label class="block">Address</label>
+  <textarea name="address" class="w-full p-2 border rounded mb-3">{{ settings.address or '' }}</textarea>
+
+  <!-- Facebook -->
+  <label class="block">Facebook URL</label>
+  <input name="facebook_url" value="{{ settings.facebook_url or '' }}" class="w-full p-2 border rounded mb-3" />
+
+  <!-- Twitter -->
+  <label class="block">Twitter URL</label>
+  <input name="twitter_url" value="{{ settings.twitter_url or '' }}" class="w-full p-2 border rounded mb-3" />
+
+  <!-- Instagram -->
+  <label class="block">Instagram URL</label>
+  <input name="instagram_url" value="{{ settings.instagram_url or '' }}" class="w-full p-2 border rounded mb-3" />
+
+  <!-- Logo Upload -->
   <label class="block">Logo</label>
-  <input type="file" name="logo" class="w-full mb-2" />
+  <input type="file" name="logo" class="w-full mb-3" />
   {% if settings.logo %}
-    <img src="/static/{{ settings.logo }}" class="w-32 h-20 object-contain" />
+    <img src="{{ url_for('static', filename=settings.logo) }}" class="w-32 h-20 object-contain mb-3" />
   {% endif %}
 
-  <label class="block mt-2">Favicon</label>
-  <input type="file" name="favicon" class="w-full mb-2" />
+  <!-- Favicon Upload -->
+  <label class="block">Favicon</label>
+  <input type="file" name="favicon" class="w-full mb-3" />
   {% if settings.favicon %}
-    <img src="/static/{{ settings.favicon }}" class="w-12 h-12 object-contain" />
+    <img src="{{ url_for('static', filename=settings.favicon) }}" class="w-12 h-12 object-contain mb-3" />
   {% endif %}
 
-  <div class="mt-3">
-    <button class="bg-blue-600 text-white px-4 py-2 rounded">Save Settings</button>
-  </div>
+  <button class="bg-blue-600 text-white px-4 py-2 rounded">Save Settings</button>
 </form>
+
 {% endblock %}

@@ -8,7 +8,7 @@
     <div class="absolute inset-0 bg-black/40"></div>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="text-center">
-            <h1 class="text-5xl lg:text-6xl font-bold mb-6">About NexaStore</h1>
+            <h1 class="text-5xl lg:text-6xl font-bold mb-6">About {{ settings.site_name }}</h1>
             <p class="text-xl text-gray-300 max-w-3xl mx-auto">
                 We're redefining online shopping with premium products, exceptional service, 
                 and a commitment to quality that sets us apart.
@@ -120,32 +120,32 @@
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <!-- Team Member 1 -->
             <div class="text-center group">
                 <div class="relative mb-6">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                         alt="Alex Johnson" 
+                    <img src="{{ url_for('static', filename='uploads/about/shanto.png') }}" 
+                         alt="Shanto Bepari" 
                          class="w-32 h-32 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300">
                     <div class="absolute inset-0 rounded-full bg-primary-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Alex Johnson</h3>
+                <a href="https://shanto-bepari.vercel.app/"><h3 class="text-xl font-semibold text-gray-900 mb-2">Shanto Bepari</h3></a>
                 <p class="text-primary-600 font-medium mb-3">CEO & Founder</p>
                 <p class="text-gray-600 text-sm">
-                    Visionary leader with 10+ years of experience in e-commerce and technology.
+                    Visionary leader with 5+ years of experience in e-commerce and technology.
                 </p>
             </div>
             
             <!-- Team Member 2 -->
             <div class="text-center group">
                 <div class="relative mb-6">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                         alt="Sarah Chen" 
+                    <img src="{{ url_for('static', filename='uploads/about/anonna.png') }}" 
+                         alt="Anonna Roy" 
                          class="w-32 h-32 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300">
                     <div class="absolute inset-0 rounded-full bg-secondary-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Sarah Chen</h3>
-                <p class="text-primary-600 font-medium mb-3">Head of Product</p>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Anonna Roy</h3>
+                <p class="text-primary-600 font-medium mb-3">Project Manager</p>
                 <p class="text-gray-600 text-sm">
                     Product curation expert with a keen eye for quality and design.
                 </p>
@@ -154,32 +154,18 @@
             <!-- Team Member 3 -->
             <div class="text-center group">
                 <div class="relative mb-6">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                         alt="Marcus Rodriguez" 
+                    <img src="{{ url_for('static', filename='uploads/about/abdullah.png') }}" 
+                         alt="Abdullah Al Mamun" 
                          class="w-32 h-32 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300">
                     <div class="absolute inset-0 rounded-full bg-green-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Marcus Rodriguez</h3>
-                <p class="text-primary-600 font-medium mb-3">Tech Lead</p>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Abdullah Al Mamun</h3>
+                <p class="text-primary-600 font-medium mb-3">Developer</p>
                 <p class="text-gray-600 text-sm">
                     Full-stack developer ensuring our platform runs smoothly and securely.
                 </p>
             </div>
             
-            <!-- Team Member 4 -->
-            <div class="text-center group">
-                <div class="relative mb-6">
-                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
-                         alt="Emily Watson" 
-                         class="w-32 h-32 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300">
-                    <div class="absolute inset-0 rounded-full bg-purple-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Emily Watson</h3>
-                <p class="text-primary-600 font-medium mb-3">Customer Success</p>
-                <p class="text-gray-600 text-sm">
-                    Dedicated to ensuring every customer has an exceptional experience.
-                </p>
-            </div>
         </div>
     </div>
 </section>

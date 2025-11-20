@@ -14,7 +14,7 @@
 
     <aside class="w-64 bg-white border-r min-h-screen">
       <div class="p-6 border-b">
-        <a href="{{ url_for('admin.dashboard') }}" class="text-xl font-bold">NexaStore Admin</a>
+        <a href="{{ url_for('admin.dashboard') }}" class="text-xl font-bold">{{ settings.site_name }} Admin</a>
       </div>
       <nav class="p-4">
         <a class="block py-2 px-3 rounded hover:bg-gray-100" href="{{ url_for('admin.dashboard') }}">Dashboard</a>

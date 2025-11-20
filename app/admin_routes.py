@@ -349,16 +349,35 @@ def settings():
         settings = WebsiteSettings()
         db.session.add(settings)
         db.session.commit()
+
     if request.method == 'POST':
+
+        # Text fields
         settings.site_name = request.form.get('site_name')
+        settings.site_description = request.form.get('site_description')
+        settings.site_tags = request.form.get('site_tags')
+
         settings.contact_email = request.form.get('contact_email')
+        settings.contact_phone = request.form.get('contact_phone')
+        settings.address = request.form.get('address')
+
+        settings.facebook_url = request.form.get('facebook_url')
+        settings.twitter_url = request.form.get('twitter_url')
+        settings.instagram_url = request.form.get('instagram_url')
+
+        # Image Upload
         logo = request.files.get('logo')
         favicon = request.files.get('favicon')
+
         if logo:
             settings.logo = save_image(logo, folder='settings')
+
         if favicon:
             settings.favicon = save_image(favicon, folder='settings')
+
         db.session.commit()
-        flash('Settings updated!', 'success')
+        flash("Settings updated successfully!", "success")
         return redirect(url_for('admin.settings'))
-    return render_template('admin/settings.html', settings=settings)
+
+    return render_template("admin/settings.html", settings=settings)
+
