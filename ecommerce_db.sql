@@ -224,7 +224,7 @@ DROP TABLE IF EXISTS `website_settings`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `website_settings` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `site_name` varchar(100) DEFAULT 'NexaStore',
+  `site_name` varchar(100) DEFAULT 'EcomSolution',
   `site_description` text,
   `site_tags` text,
   `contact_email` varchar(100) DEFAULT NULL,
@@ -246,7 +246,7 @@ CREATE TABLE `website_settings` (
 
 LOCK TABLES `website_settings` WRITE;
 /*!40000 ALTER TABLE `website_settings` DISABLE KEYS */;
-INSERT INTO `website_settings` VALUES (1,'EcomSolution','Your premier destination for quality products and exceptional shopping experience. We offer premium products with fast delivery and outstanding customer service.','ecommerce, shopping, online store, premium products','hello@nexastore.com','+1 (555) 123-4567','123 Business District, Tech City, TC 12345','https://facebook.com/nexastore','https://twitter.com/nexastore','https://instagram.com/nexastore','uploads/logo/c8e296396ad3a293.webp',NULL,'2025-10-28 08:52:00');
+INSERT INTO `website_settings` VALUES (1,'EcomSolution','Your premier destination for quality products and exceptional shopping experience. We offer premium products with fast delivery and outstanding customer service.','ecommerce, shopping, online store, premium products','support@ecomsolution.com','+8801781768085','KDA KHULNA, KHULNA CITY, BANGLADESH','https://facebook.com/ecom-solution','https://twitter.com/ecom-solution','https://instagram.com/ecom-solution','uploads/logo/c8e296396ad3a293.webp',NULL,'2025-10-28 08:52:00');
 /*!40000 ALTER TABLE `website_settings` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

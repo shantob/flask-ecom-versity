@@ -10,7 +10,8 @@
 
   <!-- Site Description -->
   <label class="block">Site Description</label>
-  <textarea name="site_description" class="w-full p-2 border rounded mb-3">{{ settings.site_description or '' }}</textarea>
+  <textarea name="site_description"
+    class="w-full p-2 border rounded mb-3">{{ settings.site_description or '' }}</textarea>
 
   <!-- Site Tags -->
   <label class="block">Site Tags (comma separated)</label>
@@ -44,14 +45,14 @@
   <label class="block">Logo</label>
   <input type="file" name="logo" class="w-full mb-3" />
   {% if settings.logo %}
-    <img src="{{ url_for('static', filename=settings.logo) }}" class="w-32 h-20 object-contain mb-3" />
+  <img src="{{ url_for('static', filename=settings.logo) }}" class="w-32 h-20 object-contain mb-3" />
   {% endif %}
 
   <!-- Favicon Upload -->
   <label class="block">Favicon</label>
   <input type="file" name="favicon" class="w-full mb-3" />
   {% if settings.favicon %}
-    <img src="{{ url_for('static', filename=settings.favicon) }}" class="w-12 h-12 object-contain mb-3" />
+  <img src="{{ url_for('static', filename=settings.favicon) }}" class="w-12 h-12 object-contain mb-3" />
   {% endif %}
 
   <button class="bg-blue-600 text-white px-4 py-2 rounded">Save Settings</button>
